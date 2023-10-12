@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/fogliostile.css">
+<script>
+function faicalcolo() {
+  var sliderpeso = document.getElementById("peso");
+  var slidercadenza = document.getElementById("cadenza");
+  var sliderdislivello = document.getElementById("dislivello");
+  var slidervelocita = document.getElementById("velocita");
+  var modalita = document.getElementById("modalita").value;
+  var batteria = document.getElementById("batteria").value;
+  var stagione = document.getElementById("stagione").value;
+  var vento = document.getElementById("vento").value;
+  
+  // Variabili
+   
+  
+   var value4 = 0; // tiene conto della modalità d'uso (eco, tour, emtb, turbo)
+   var value5 = 0; // tiene conto della capacità della batteria (400Wh,500Wh, ecc)
+   var value6 = 0; // tiene conto della stagione (estate, inverno)
+   var value7 = 0; //tiene conto delle condizioni del vento (assente, moderato, forte)
+
+  if (vento === "assente") {
+    // Sottrarre 10 
+    value7 = 1;
+  } else if (vento === "moderato") {
+    // Sottrarre 20 
+    value7 = 2;
+  } else if (vento === "forte") {
+    // Sottrarre 20 
+    value7 = 3;
+  }
+  
+ 
+
+  if (stagione === "ESTATE") {
+    // Sottrarre 10 per la modalità ECO
+    value6 = 1;
+  } else if (stagione === "INVERNO") {
+    // Sottrarre 20 per la modalità TOUR
+    value6 = 2;
+  }
+  
+  
+  if (modalita === "ECO") {
+    // Sottrarre 10 per la modalità ECO
+    value4 = 1;
+  } else if (modalita === "TOUR") {
+    // Sottrarre 20 per la modalità TOUR
+    value4 = 2;
+  } else if (modalita === "eMTB") {
+    // Sottrarre 30 per la modalità eMTB
+    value4 = 3;
+  } else if (modalita === "TURBO") {
+    // Sottrarre 50 per la modalità TURBO
+    value4 = 4;
+  }
+  
+
+  if (batteria === "400") {
+    // impostare valore
+    value5 = 1;
+  } else if (batteria === "500") {
+    // impostare valore  
+    value5 = 2;
+  } else if (batteria === "625") {
+    // impostare valore
+    value5 = 3;
+  } else if (batteria === "725") {
+    // impostare valore
+    value5 = 4;
+  } else if (batteria === "925") {
+    // impostare valore
+    value5 = 5;
+  }
+  
+  var output1 = document.getElementById("valpeso");
+  var output2 = document.getElementById("valcadenza");
+  var output3 = document.getElementById("valdislivello");
+  var output4 = document.getElementById("modalitaOutput"); 
+  var output5 = document.getElementById("batteriaOutput"); 
+  var output6 = document.getElementById("velocitaOutput"); 
+  var output7 = document.getElementById("stagioneOutput");
+  var output8 = document.getElementById("ventoOutput");
+  
+  var resultOutput = document.getElementById("risultato");
+  
+  output1.innerHTML = sliderpeso.value + " Kg";
+  output2.innerHTML = slidercadenza.value + " giri/min";
+  output3.innerHTML = sliderdislivello.value + " metri";
+  output4.innerHTML = modalita; // Mostra la modalità selezionata
+  output5.innerHTML = batteria; // Mostra la capacità della batteria
+  output6.innerHTML = slidervelocita.value + " chilometri orari";
+  output7.innerHTML = stagione;
+  output8.innerHTML = vento;
+  
+  var value1 = parseFloat(sliderpeso.value);
+  var value2 = parseFloat(slidercadenza.value);
+  var value3 = parseFloat(sliderdislivello.value);
+  var value6 = parseFloat(slidervelocita.value);
+  
+  var calcolo = value1 + value2 + value3 + value4 + value5 + value6 + value7;
+  resultOutput.innerHTML = calcolo.toFixed(2) + " KM"; // Mostra il risultato con due decimali
+}
+</script>
+</head>
+<body onload="faicalcolo()">
+
+<h1>Calcolo distanza per e MTB</h1>
+<p>Il configuratore è ottimizzato per Mountain Bike elettriche e percorsi di montagna su sterrato
+<div class="slidecontainer">
+  <label> inserisci il peso totale: ciclista + bici + zaino + accessori</label>
+  <input type="range" min="50" max="120" value="50" class="slider" id="peso" onchange="faicalcolo()"><br><br>
+  <label> inserisci la cadenza di pedalata giri/min</label>
+  <input type="range" min="30" max="110" value="50" class="slider" id="cadenza" onchange="faicalcolo()"><br><br>
+  <label> inserisci il dislivello positivo del percorso in metri</label>
+  <input type="range" min="50" max="4000" value="50" class="slider" id="dislivello" onchange="faicalcolo()"><br><br>
+   <label> inserisci la velocità media in Km/h</label>
+  <input type="range" min="10" max="25" value="25" class="slider" id="velocita" onchange="faicalcolo()"><br><br>
+  
+  <label for="modalita">Seleziona la modalità:</label>
+  <select id="modalita" onchange="faicalcolo()">
+    <option value="ECO">ECO</option>
+    <option value="TOUR">TOUR</option>
+    <option value="eMTB">eMTB</option>
+    <option value="TURBO">TURBO</option>
+  </select>
+  <br><br>
+  <label for="batteria">Seleziona la capacità della tua batteria Wh:</label>
+  <select id="batteria" onchange="faicalcolo()">
+    <option value="400">400</option>
+    <option value="500">500</option>
+    <option value="625">625</option>
+    <option value="725">725</option>
+    <option value="925">925</option>
+  </select>
+  <br><br>
+  <label for="stagione">Seleziona la stagione:</label>
+  <select id="stagione" onchange="faicalcolo()">
+    <option value="ESTATE">ESTATE</option>
+    <option value="INVERNO">INVERNO</option>
+  </select>
+  <br><br>
+  <label for="vento">Condizioni di vento:</label>
+  <select id="vento" onchange="faicalcolo()">
+    <option value="assente">assente</option>
+	<option value="moderato">moderato</option>
+    <option value="forte">forte</option>
+  </select>
+  
+  <p>PESO TOTALE: <span id="valpeso"></span></p>
+  <p>CADENZA: <span id="valcadenza"></span></p>
+  <p>DISLIVELLO +: <span id="valdislivello"></span></p>
+  <p>MODALITA' USO +: <span id="modalitaOutput"></span></p>
+  <p>CAPACITA' BATTERIA: <span id="batteriaOutput"></span></p>
+  <p>VELOCITA' MEDIA: <span id="velocitaOutput"></span></p>
+  <p>STAGIONE: <span id="stagioneOutput"></span></p>
+  <p>CONDIZIONI DI VENTO: <span id="ventoOutput"></span></p>
+  <p class="testoresult">RISULTATO: <span id="risultato"></span></p>
+</div>
+
+</body>
+</html>
+
